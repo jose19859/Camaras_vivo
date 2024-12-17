@@ -1,1 +1,166 @@
-index.html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cámaras en vivo</title>
+    <link rel="stylesheet" href="archivo.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: white;
+        }
+
+        h1 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            background-color: #000;
+            color: #ef460c;
+            padding: 20px 0;
+            margin: 0;
+            font-size: 3em;
+            z-index: 1000;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .content {
+            padding-top: 100px; /* Espacio suficiente para no tapar el título */
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .video-container {
+            background: #47d5dc;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            text-align: center;
+        }
+
+        iframe {
+            width: 100%;
+            height: 200px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #333;
+            font-size: 1.2em;
+        }
+
+        .video-container:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Contenedor fijo para la selección de cámaras */
+        .add-video-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+        }
+
+        .add-video-container select, .add-video-container button {
+            padding: 10px;
+            font-size: 1em;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .add-video-container button {
+            background-color: #ef460c;
+            color: white;
+            cursor: pointer;
+        }
+
+        .add-video-container button:hover {
+            background-color: #ff7043;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Cámaras en vivo</h1>
+
+    <!-- Grilla para mostrar cámaras -->
+    <div class="content">
+        <div class="video-grid" id="videoGrid">
+            <!-- Aquí se mostrarán las cámaras seleccionadas -->
+        </div>
+    </div>
+
+    <!-- Sección para seleccionar cámaras -->
+    <div class="add-video-container">
+        <label for="cameraSelect">Selecciona una cámara:</label>
+        <select id="cameraSelect">
+            <option value="Ik7dl81mLYs">Canal A24</option>
+            <option value="cb12KmMMDJA">Canal TN Vivo</option>
+            <option value="V3peyn466Rg">Pinamar en Vivo</option>
+            <option value="bwQyNMjsG3k">Rio Janeiro en Vivo</option>
+            <option value="RHpyFXfCDeo">Cancun en Vivo</option>
+            <option value="yr5PjSQoLUE">Ciudad de Mexico en Vivo</option>
+            <option value="N1Tfrn7hMWU">Canal C5N Vivo</option>
+            <option value="avly0uwZzOE">Cronica TV Vivo</option>
+            <option value="xU0FR_kTtLo">Camara Vivo Pinamar</option>
+            <option value="SmskjNiNYDc">Camara Vivo Villa Gesell</option>
+            <option value="xvbTcIpnHlg">Camara Ushuaia Vivo </option>
+            <option value="ahuZ9RLJ_1s">Camara Vivo Mar del Plata</option>
+            <option value="6EX6qhI83Os">Camara Vivo Praia Rio Brazil </option>
+
+
+        </select>
+        <button onclick="addVideo()">Agregar Cámara</button>
+    </div>
+
+    <script>
+        // Función para agregar una nueva cámara
+        function addVideo() {
+            const videoId = document.getElementById('cameraSelect').value;
+            const videoTitle = document.getElementById('cameraSelect').options[document.getElementById('cameraSelect').selectedIndex].text;
+
+            // Crear contenedor de video
+            const videoContainer = document.createElement('div');
+            videoContainer.classList.add('video-container');
+
+            // Etiqueta para el título
+            const label = document.createElement('label');
+            label.textContent = videoTitle;
+
+            // Crear iframe
+            const iframe = document.createElement('iframe');
+            iframe.src = 'https://www.youtube.com/embed/' + videoId;
+            iframe.allowFullscreen = true;
+
+            // Añadir label e iframe
+            videoContainer.appendChild(label);
+            videoContainer.appendChild(iframe);
+
+            // Agregar el contenedor a la grilla
+            document.getElementById('videoGrid').appendChild(videoContainer);
+        }
+    </script>
+</body>
+</html>
